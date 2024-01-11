@@ -1,4 +1,4 @@
-{
+export const ormconfig = {
   "type": "sqlite",
   "database": "database.sqlite",
   "entities": [

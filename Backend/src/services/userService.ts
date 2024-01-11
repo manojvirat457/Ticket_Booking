@@ -5,9 +5,9 @@ import { eventBus } from "../utilities/serviceExporter";
 export class UserService {
     createUser = async (user: User) => {
         try {
-            await user.save();
-            eventBus.publish(USER_CREATED, user);
-            return user;
+            const response: User = await user.save();
+            eventBus.publish(USER_CREATED, response);
+            return response;
         } catch (error) {
             throw error;
         }

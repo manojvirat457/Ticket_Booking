@@ -3,6 +3,6 @@ import { eventBus } from "../utilities/serviceExporter";
 
 export class TicketService {
 
-    CreateTicket = (id: string): void => eventBus.publish(TICKET_CREATED, {id: id}) 
+    static CreateTicket = (id: string): void => eventBus.publish(TICKET_CREATED, {id: id}) 
 
 }

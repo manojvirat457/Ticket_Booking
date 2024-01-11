@@ -11,22 +11,15 @@ class ServiceContainer {
     this.LoadTicketEvents();
   }
 
-  static getEventBusService(): EventBusService {
-    if (!this.eventBusServiceInstance) {
-      this.eventBusServiceInstance = new EventBusService();
-    }
+  static getEventBusService = (): EventBusService => (
+    this.eventBusServiceInstance = this.eventBusServiceInstance ??
+    new EventBusService());
 
-    return this.eventBusServiceInstance;
-  }
 
-  static LoadTicketEvents(): TicketEvents {
-    if (!this.TicketEventsInstance) {
-      const eventBusService = this.getEventBusService();
-      this.TicketEventsInstance = new TicketEvents({eventBusService});
-    }
+  static LoadTicketEvents = (): TicketEvents => (
+    this.TicketEventsInstance = this.TicketEventsInstance ??
+    new TicketEvents({ eventBusService: this.getEventBusService() }));
 
-    return this.TicketEventsInstance;
-  }
 }
 
 export default ServiceContainer;
