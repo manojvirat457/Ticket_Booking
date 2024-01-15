@@ -1,6 +1,6 @@
 // src/ServiceContainer.ts
-import EventBusService from './eventServiceBus';
-import TicketEvents from '../subscribers/ticketEvents';
+import EventBusService from '../events/eventServiceBus';
+import TicketEvents from '../../subscribers/ticketEvents';
 
 class ServiceContainer {
   private static eventBusServiceInstance: EventBusService;

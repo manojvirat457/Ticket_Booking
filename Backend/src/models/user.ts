@@ -11,14 +11,14 @@ class User extends BaseEntity {
   @IsNotEmpty({ message: 'name cannot be empty' })
   fullName!: string;
 
-  @Column()
+  @Column({unique: true})
   @IsEmail({}, { message: 'Invalid email format' })
   email!: string;
 
   @Column()
   age!: number;
 
-  @Column()
+  @Column({unique: true})
   @IsPhoneNumber('IN', { message: 'Invalid phone number format' })
   phone!: string;
 

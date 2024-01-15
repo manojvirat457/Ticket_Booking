@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColu
 import { IsNotEmpty } from 'class-validator';
 import BookingStatus from '../enums/bookingEnum';
 import User from './user';
+import Bus from './bus';
 
 @Entity()
 export default class Booking extends BaseEntity {
@@ -20,4 +21,6 @@ export default class Booking extends BaseEntity {
     @JoinColumn({ name: 'userId' })
     user!: User;
 
+    @ManyToOne(() => Bus, (bus) => bus.booking)
+    bus!: Bus;
 }
