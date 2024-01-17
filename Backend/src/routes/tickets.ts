@@ -8,12 +8,13 @@ import { failed, ok } from '../utilities/response';
 import { eventBus } from '../utilities/serviceExporter';
 import { TICKET_CREATED } from '../constants/eventConsts';
 import { UserService } from '../services/userService';
+import { TicketService } from '../services/ticketService';
 
 const ticketsRouter: Router = express.Router();
 
 ticketsRouter.get("/all", async (req: Request, res: Response) => {
     try {
-        ok(res, await Booking.find({ relations: ['user', 'bus'] }));
+        ok(res, await TicketService.GetAllTickets());
     } catch (error) {
         failed(res, error)
     }
@@ -169,10 +170,17 @@ ticketsRouter.get('/owner/:bookingId', async (req: Request, res: Response) => {
 ticketsRouter.post('/reset/:busId', async (req: Request, res: Response) => {
     try {
         let { busId } = req.params;
-        // Update the status of all tickets to 'open' (or the desired initial status)
-        await Booking.update({}, { status: BookingStatus.OPEN, bus: { id: busId } });
 
-        return res.status(200).json({ message: 'Server reset successful' });
+        let { userName, password } = req.headers;
+
+        if (userName == 'admin' && password == 'Admin@123') {
+            // Update the status of all tickets to 'open' (or the desired initial status)
+            await Booking.update({}, { status: BookingStatus.OPEN, bus: { id: busId } });
+
+            return res.status(200).json({ message: 'Server reset successful' });
+        }
+
+        return res.status(500).json({ message: 'Invalid Admin Credentials' });
     } catch (error) {
         console.error('Error resetting server:', error);
         return res.status(500).json({ message: 'Internal server error' });
