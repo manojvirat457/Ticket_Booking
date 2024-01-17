@@ -74,7 +74,7 @@ ticketsRouter.post('/book', async (req: Request, res: Response) => {
     }
 });
 
-ticketsRouter.post('/cancel/:bookingId', async (req: Request, res: Response) => {
+ticketsRouter.get('/cancel/:bookingId', async (req: Request, res: Response) => {
     const { bookingId } = req.params;
 
     try {
@@ -87,7 +87,7 @@ ticketsRouter.post('/cancel/:bookingId', async (req: Request, res: Response) => 
         }
 
         // Check if the booking is in a cancellable state (e.g., not already canceled or completed)
-        if (booking.status === BookingStatus.CANCELED || booking.status === BookingStatus.CONFIRMED) {
+        if (booking.status === BookingStatus.CANCELED || booking.status !== BookingStatus.CONFIRMED) {
             return res.status(400).json({ message: 'Booking cannot be canceled' });
         }
 
